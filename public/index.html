@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real Chile Roleplay - Portal Oficial</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { display: flex; background: #0f172a; color: #fff; min-height: 100vh; flex-direction: column; }
+        @media(min-width: 768px) { body { flex-direction: row; } }
+        .sidebar { width: 100%; background: #1e293b; padding: 20px; display: flex; flex-direction: column; justify-content: space-between; border-bottom: 1px solid #334155; }
+        @media(min-width: 768px) { .sidebar { width: 270px; border-right: 1px solid #334155; border-bottom: none; } }
+        .logo { font-size: 20px; font-weight: bold; color: #38bdf8; text-transform: uppercase; margin-bottom: 20px; letter-spacing: 1px; }
+        .menu button { display: block; width: 100%; padding: 12px 15px; margin-bottom: 8px; background: transparent; border: none; color: #94a3b8; text-align: left; cursor: pointer; border-radius: 8px; font-size: 15px; }
+        .menu button:hover, .menu button.active { background: #0284c7; color: #fff; }
+        .main-content { flex: 1; padding: 20px; }
+        @media(min-width: 768px) { .main-content { padding: 40px; } }
+        .card { background: #1e293b; padding: 20px; border-radius: 12px; border: 1px solid #334155; max-width: 750px; }
+        .hidden { display: none; }
+        .btn-discord { display: inline-block; background: #5865F2; color: #fff; padding: 12px 24px; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 16px; margin-top: 10px; }
+        input { width: 100%; padding: 12px; margin: 8px 0 16px 0; border-radius: 6px; border: 1px solid #334155; background: #0f172a; color: #fff; }
+        .btn-action { background: #0284c7; color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer; font-weight: bold; width: 100%; }
+        .cedula-box { background: linear-gradient(135deg, #1e293b, #0f172a); border: 2px solid #38bdf8; border-radius: 12px; padding: 20px; margin-top: 20px; }
+        .cedula-header { border-bottom: 1px solid #38bdf8; padding-bottom: 10px; margin-bottom: 15px; color: #38bdf8; font-weight: bold; font-size: 13px; }
+        .user-info { display: flex; align-items: center; gap: 12px; padding-top: 15px; border-top: 1px solid #334155; margin-top: 15px; }
+        .user-info img { width: 40px; height: 40px; border-radius: 50%; }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <div>
+            <div class="logo">🇨🇱 REAL CHILE RP</div>
+            <div class="menu">
+                <button class="active" onclick="verSeccion('inicio')">🏠 Inicio</button>
+                <button onclick="verSeccion('cedula')">🪪 Registro Civil</button>
+                <button onclick="verSeccion('banco')">🏦 Banco Central</button>
+                <button onclick="verSeccion('casino')">🎰 Casino Municipal</button>
+            </div>
+        </div>
+        <div id="perfil-discord">
+            <p style="color: #94a3b8; font-size: 14px;">Cargando usuario...</p>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div id="sec-inicio" class="card">
+            <h1>Bienvenido a Real Chile Roleplay</h1>
+            <p style="margin: 15px 0; color: #94a3b8;">Portal ciudadano oficial. Conecta tu cuenta de Discord para solicitar tus documentos oficiales de identidad, revisar tus finanzas y acceder a los servicios de la comunidad.</p>
+            <div id="zona-login">
+                <a href="/auth/discord" class="btn-discord">Iniciar Sesión con Discord</a>
+            </div>
+        </div>
+
+        <div id="sec-cedula" class="card hidden">
+            <h2>Registro Civil e Identificación</h2>
+            <div id="form-cedula-box">
+                <p style="margin-bottom: 15px; color: #94a3b8;">Ingresa la información de tu personaje para registrar tu identidad dentro de Real Chile RP:</p>
+                <form onsubmit="guardarCedula(event)">
+                    <label>Nombre y Apellidos Completo (IC):</label>
+                    <input type="text" id="inp-nombre" placeholder="Ej: Esteban Quito" required>
+                    
+                    <label>Fecha de Nacimiento:</label>
+                    <input type="date" id="inp-fecha" required>
+
+                    <label>Nacionalidad:</label>
+                    <input type="text" id="inp-nacionalidad" value="Chilena" required>
+
+                    <label>Ocupación / Empleo:</label>
+                    <input type="text" id="inp-trabajo" placeholder="Ej: Carabineros, Bombero, Cesante..." required>
+
+                    <button type="submit" class="btn-action">Solicitar Cédula de Identidad</button>
+                </form>
+            </div>
+            <div id="resultado-cedula" class="hidden"></div>
+        </div>
+
+        <div id="sec-banco" class="card hidden">
+            <h2>Banco Estado - Real Chile RP</h2>
+            <p style="margin-top: 10px; color: #94a3b8;">Estado de tu cuenta corriente institucional:</p>
+            <div class="cedula-box" style="border-color: #22c55e;">
+                <h3 style="color: #22c55e;">Saldo Disponible: $500,000</h3>
+                <p style="font-size: 12px; color: #94a3b8; margin-top: 5px;">Cuenta Vista N°: 12938402</p>
+            </div>
+        </div>
+
+        <div id="sec-casino" class="card hidden">
+            <h2>Casino Municipal Real Chile</h2>
+            <p style="margin: 15px 0; color: #94a3b8;">Sección para fichas y sorteos del servidor.</p>
+            <button class="btn-action" onclick="alert('Sistema de Casino en mantenimiento')">Entrar al Casino</button>
+        </div>
+    </div>
+
+    <script>
+        let usuarioActual = null;
+
+        async function comprobarSesion() {
+            const res = await fetch('/api/user');
+            const data = await res.json();
+            const zonaLogin = document.getElementById('zona-login');
+            const perfilDiv = document.getElementById('perfil-discord');
+
+            if (data.loggedIn) {
+                usuarioActual = data.user;
+                zonaLogin.innerHTML = `<p style="color: #22c55e; font-weight: bold;">✅ Sesión Activa como ${data.user.username}</p>`;
+                perfilDiv.innerHTML = `
+                    <div class="user-info">
+                        <img src="${data.user.avatar}">
+                        <div>
+                            <strong>${data.user.username}</strong><br>
+                            <a href="/auth/logout" style="color: #ef4444; font-size: 12px; text-decoration: none;">Cerrar sesión</a>
+                        </div>
+                    </div>
+                `;
+                cargarCedulaGuardada();
+            } else {
+                perfilDiv.innerHTML = `<p style="color: #94a3b8; font-size: 14px;">No has iniciado sesión</p>`;
+            }
+        }
+
+        function verSeccion(id) {
+            if (!usuarioActual && id !== 'inicio') {
+                alert('Debes iniciar sesión con Discord primero.');
+                return;
+            }
+            document.querySelectorAll('.main-content > div').forEach(div => div.classList.add('hidden'));
+            document.getElementById(`sec-${id}`).classList.remove('hidden');
+        }
+
+        async function guardarCedula(e) {
+            e.preventDefault();
+            const body = {
+                nombre: document.getElementById('inp-nombre').value,
+                fecha: document.getElementById('inp-fecha').value,
+                nacionalidad: document.getElementById('inp-nacionalidad').value,
+                trabajo: document.getElementById('inp-trabajo').value
+            };
+
+            const res = await fetch('/api/cedula/guardar', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(body)
+            });
+            const data = await res.json();
+            if (data.ok) mostrarCedulaHTML(data.cedula);
+        }
+
+        async function cargarCedulaGuardada() {
+            const res = await fetch('/api/cedula/mi-cedula');
+            const data = await res.json();
+            if (data) mostrarCedulaHTML(data);
+        }
+
+        function mostrarCedulaHTML(c) {
+            document.getElementById('form-cedula-box').classList.add('hidden');
+            const resDiv = document.getElementById('resultado-cedula');
+            resDiv.classList.remove('hidden');
+            resDiv.innerHTML = `
+                <div class="cedula-box">
+                    <div class="cedula-header">REPÚBLICA DE CHILE - SERVICIO DE REGISTRO CIVIL (REAL CHILE RP)</div>
+                    <p><strong>RUN:</strong> ${c.rut}</p>
+                    <p><strong>NOMBRES:</strong> ${c.nombre}</p>
+                    <p><strong>FECHA NAC.:</strong> ${c.fecha}</p>
+                    <p><strong>NACIONALIDAD:</strong> ${c.nacionalidad}</p>
+                    <p><strong>PROFESIÓN / OCUPACIÓN:</strong> ${c.trabajo}</p>
+                </div>
+            `;
+        }
+
+        comprobarSesion();
+    </script>
+</body>
+</html>
